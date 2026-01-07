@@ -1,59 +1,184 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Bruttal Health</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BRUTTAL HEALTH</title>
+  <meta name="description" content="Ingeniería corporal. Regulación · Estructura · Presencia." />
+
   <style>
-    body {
-      margin: 0;
-      padding: 80px;
-      font-family: Helvetica, Arial, sans-serif;
-      background: #ffffff;
-      color: #000000;
-      line-height: 1.6;
+    :root{
+      --bg:#ffffff;
+      --ink:#111111;
+      --muted:#6b6b6b;
+      --line:#e8e8e8;
     }
-    h1 {
-      font-size: 28px;
-      letter-spacing: 0.04em;
-      margin-bottom: 40px;
+    *{box-sizing:border-box}
+    html,body{height:100%; margin:0; background:var(--bg); color:var(--ink); font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;}
+    a{color:inherit}
+
+    /* PORTAL */
+    .portal{
+      position:fixed; inset:0;
+      display:flex; align-items:center; justify-content:center;
+      background:var(--bg);
+      z-index:10;
+      transition: opacity 900ms ease;
     }
-    p {
-      max-width: 520px;
-      font-size: 16px;
-      margin-bottom: 18px;
+    .portal.fadeout{ opacity:0; pointer-events:none; }
+    .portal-inner{
+      width:min(1100px, 92vw);
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:14px;
+      align-items:end;
+    }
+    .portal-image{
+      width:100%;
+      border-radius:18px;
+      overflow:hidden;
+      border:1px solid var(--line);
+      background:#f6f6f6;
+    }
+    .portal-image img{
+      display:block;
+      width:100%;
+      height:auto;
+      transform:scale(1.02);
+      filter: contrast(1.03) saturate(1.02);
+    }
+    .portal-caption{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:0 4px;
+    }
+    .tag{
+      font-size:12px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color:var(--muted);
+    }
+    .enter{
+      border:1px solid var(--line);
+      background:transparent;
+      padding:10px 14px;
+      border-radius:999px;
+      cursor:pointer;
+      font-size:12px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+    }
+    .enter:hover{ background:#f4f4f4; }
+
+    /* CONTENT */
+    .wrap{
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 90px 22px 120px;
+      opacity:0;
+      transform: translateY(10px);
+      transition: opacity 900ms ease, transform 900ms ease;
+    }
+    body.ready .wrap{
+      opacity:1;
+      transform: translateY(0);
+    }
+
+    h1{
+      margin:0 0 18px 0;
+      font-size:42px;
+      letter-spacing:.02em;
+    }
+    .sub{
+      color:var(--muted);
+      margin:0 0 40px 0;
+      line-height:1.8;
+    }
+    .block{
+      border-top:1px solid var(--line);
+      padding-top:26px;
+      margin-top:26px;
+      line-height:1.9;
+      font-size:16px;
+      white-space:pre-line;
+    }
+    .foot{
+      margin-top:70px;
+      color:var(--muted);
+      font-size:12px;
+      letter-spacing:.06em;
+    }
+
+    @media (max-width:520px){
+      h1{font-size:34px}
+      .wrap{padding-top:70px}
     }
   </style>
 </head>
+
 <body>
+  <!-- RITUAL DE ENTRADA (PORTAL) -->
+  <section class="portal" id="portal" aria-label="Ritual de entrada">
+    <div class="portal-inner">
+      <div class="portal-image">
+        <!-- OJO: esta línea debe apuntar a tu imagen -->
+        <img src="assets/portal.jpg" alt="Portal" />
+      </div>
 
-<h1>BRUTTAL HEALTH</h1>
+      <div class="portal-caption">
+        <div class="tag">Bruttal Health · Portal</div>
+        <button class="enter" id="enterBtn">Entrar</button>
+      </div>
+    </div>
+  </section>
 
-<p>Ingeniería corporal</p>
-<p>Regulación · Estructura · Presencia</p>
+  <!-- CONTENIDO -->
+  <main class="wrap" id="content" aria-label="Contenido principal">
+    <h1>BRUTTAL HEALTH</h1>
+    <p class="sub">Ingeniería corporal<br/>Regulación · Estructura · Presencia</p>
 
-<br>
+    <div class="block">
+Bruttal Health no es bienestar.
 
-<p>Bruttal Health no es bienestar.</p>
+No es motivación.
+No es estética corporal.
 
-<br>
+Es un sistema de regulación somática.
 
-<p>No es motivación.<br>
-No es estética corporal.</p>
+Cuando el cuerpo pierde eje,
+se ajusta.
 
-<br>
+No se inspira.
+Se calibra.
+    </div>
 
-<p>Es un sistema de regulación somática.</p>
+    <div class="foot">© Bruttal Health / H-Pulse · Le Corp</div>
+  </main>
 
-<br>
+  <script>
+    const portal = document.getElementById("portal");
+    const btn = document.getElementById("enterBtn");
 
-<p>Cuando el cuerpo pierde eje,<br>
-se ajusta.</p>
+    function enter(){
+      portal.classList.add("fadeout");
+      document.body.classList.add("ready");
+      // por si quieres que al entrar haga scroll al inicio limpio:
+      window.scrollTo({top:0, behavior:"instant"});
+    }
 
-<br>
+    btn.addEventListener("click", enter);
 
-<p>No se inspira.<br>
-Se calibra.</p>
+    // Extra: si das click a la imagen también entra
+    portal.addEventListener("click", (e) => {
+      if(e.target.tagName.toLowerCase() === "img") enter();
+    });
 
+    // Extra: tecla Enter o Espacio
+    window.addEventListener("keydown", (e) => {
+      if(e.key === "Enter" || e.key === " ") enter();
+    });
+  </script>
 </body>
 </html>

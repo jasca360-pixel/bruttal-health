@@ -71,6 +71,46 @@
       text-transform:uppercase;
     }
     .enter:hover{ background:#f4f4f4; }
+#ritual{
+  position: fixed;
+  inset: 0;
+  background: #0b0b0b;
+  display: grid;
+  place-items: center;
+  z-index: 9999;
+}
+
+.portalImg{
+  width: min(900px, 90vw);
+  height: auto;
+  display: block;
+  border-radius: 16px;
+  box-shadow: 0 40px 120px rgba(0,0,0,.55);
+  filter: contrast(1.05) saturate(.95);
+}
+
+.invocation{
+  position: absolute;
+  bottom: 8vh;
+  text-align: center;
+  color: rgba(255,255,255,.85);
+  font-size: 14px;
+  letter-spacing: .06em;
+}
+
+#enter{
+  margin-top: 14px;
+  background: transparent;
+  color: rgba(255,255,255,.9);
+  border: 1px solid rgba(255,255,255,.25);
+  padding: 10px 18px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+#enter:hover{
+  border-color: rgba(255,255,255,.6);
+}
 
     /* CONTENT */
     .wrap{
@@ -152,28 +192,14 @@ Se calibra.
     <div class="foot">© Bruttal Health / H-Pulse · Le Corp</div>
   </main>
 
-  <script>
-    const portal = document.getElementById("portal");
-    const btn = document.getElementById("enterBtn");
+<script>
+  const enterBtn = document.getElementById('enter');
+  const ritual = document.getElementById('ritual');
 
-    function enter(){
-      portal.classList.add("fadeout");
-      document.body.classList.add("ready");
-      // por si quieres que al entrar haga scroll al inicio limpio:
-      window.scrollTo({top:0, behavior:"instant"});
-    }
-
-    btn.addEventListener("click", enter);
-
-    // Extra: si das click a la imagen también entra
-    portal.addEventListener("click", (e) => {
-      if(e.target.tagName.toLowerCase() === "img") enter();
-    });
-
-    // Extra: tecla Enter o Espacio
-    window.addEventListener("keydown", (e) => {
-      if(e.key === "Enter" || e.key === " ") enter();
-    });
-  </script>
+  enterBtn.addEventListener('click', () => {
+    ritual.style.opacity = '0';
+    ritual.style.pointerEvents = 'none';
+  });
+</script>
 </body>
 </html>

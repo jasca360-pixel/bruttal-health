@@ -14,8 +14,15 @@
       --line:#e8e8e8;
     }
     *{box-sizing:border-box}
-    html,body{height:100%; margin:0; background:var(--bg); color:var(--ink); font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;}
-    a{color:inherit}
+    html,body{html,body{
+  height:100%;
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family: ui-sans-serif, system-ui;
+  overflow:hidden;
+}
+
 
     /* PORTAL */
     .portal{
@@ -196,13 +203,28 @@ Se calibra.
   </main>
 
 <script>
-  const enterBtn = document.getElementById('enter');
-  const ritual = document.getElementById('ritual');
+const enterBtn = document.getElementById('enter');
+const ritual = document.getElementById('ritual');
 
-  enterBtn.addEventListener('click', () => {
-    ritual.style.opacity = '0';
-    ritual.style.pointerEvents = 'none';
-  });
+function enterRitual(){
+  ritual.classList.add('fadeout');
+  document.body.classList.add('ready');
+  // opcional: vuelve al inicio limpio
+  window.scrollTo({ top: 0, behavior: "instant" });
+}
+
+enterBtn.addEventListener('click', enterRitual);
+
+// Extra: si das click en la imagen también entra
+ritual.addEventListener('click', (e) => {
+  if (e.target.tagName.toLowerCase() === "img") enterRitual();
+});
+
+// Extra: tecla Enter o Espacio
+window.addEventListener('keydown', (e) => {
+  if (e.key === "Enter" || e.key === " ") enterRitual();
+});
+
 </script>
 </body>
 </html>

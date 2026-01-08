@@ -12,118 +12,139 @@
       --ink:#111111;
       --muted:#6b6b6b;
       --line:#e8e8e8;
-    }
-    *{box-sizing:border-box}
-    html,body{html,body{
-  height:100%;
-  margin:0;
-  background:var(--bg);
-  color:var(--ink);
-  font-family: ui-sans-serif, system-ui;
-  overflow:hidden;
-}
 
+      --portalBg:#060606;
+      --portalInk:rgba(255,255,255,.92);
+      --portalMuted:rgba(255,255,255,.72);
+    }
 
-    /* PORTAL */
-    .portal{
-  position: fixed;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #000;
-  z-index: 9999;
-  transition: opacity 1800ms ease;
+    *{ box-sizing:border-box; }
+    html, body{
+      height:100%;
+      margin:0;
+      background:var(--bg);
+      color:var(--ink);
+      font-family: ui-sans-serif, system-ui, -apple-system, "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
+      overflow:hidden; /* clave: el portal es pantalla completa */
     }
-    .portal.fadeout{ opacity:0; pointer-events:none; }
-    .portal-inner{
-      width:min(1100px, 92vw);
-      display:grid;
-      grid-template-columns: 1fr;
-      gap:14px;
-      align-items:end;
-    }
-    .portal-image{
-      width:100%;
-      border-radius:18px;
-      overflow:hidden;
-      border:1px solid var(--line);
-      background:#f6f6f6;
-    }
-    .portal-image img{
-      display:block;
-      width:100%;
-      height:auto;
-      transform:scale(1.02);
-      filter: contrast(1.03) saturate(1.02);
-    }
-    .portal-caption{
+    a{ color:inherit; }
+
+    /* ===== PORTAL (RITUAL) ===== */
+    #portal{
+      position:fixed;
+      inset:0;
+      z-index:9999;
       display:flex;
       align-items:center;
-      justify-content:space-between;
+      justify-content:center;
+      background:var(--portalBg);
+      opacity:1;
+      transition: opacity 1400ms ease;
+    }
+    #portal.fadeout{
+      opacity:0;
+      pointer-events:none;
+    }
+
+    /* respiración sutil */
+    #portal::before{
+      content:"";
+      position:absolute;
+      inset:-10%;
+      background: radial-gradient(closest-side, rgba(255,255,255,.06), rgba(255,255,255,0) 55%);
+      filter: blur(18px);
+      opacity:.55;
+      animation: breathe 6.5s ease-in-out infinite;
+      pointer-events:none;
+    }
+    @keyframes breathe{
+      0%,100%{ transform: scale(1); opacity:.45; }
+      50%{ transform: scale(1.05); opacity:.62; }
+    }
+
+    .portalInner{
+      position:relative;
+      width:min(1100px, 92vw);
+      height:min(680px, 74vh);
+      border-radius:22px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.16);
+      background:#0b0b0b;
+      box-shadow: 0 50px 150px rgba(0,0,0,.65);
+      transform: translateY(6px);
+    }
+
+    .portalImg{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      filter: contrast(1.06) saturate(.95);
+      transform: scale(1.02);
+      transition: transform 1400ms ease;
+      cursor:pointer;
+    }
+
+    /* capa de lectura */
+    .veil{
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(to bottom, rgba(0,0,0,.15), rgba(0,0,0,.70)),
+        radial-gradient(closest-side, rgba(0,0,0,.05), rgba(0,0,0,.55));
+      pointer-events:none;
+    }
+
+    .invocation{
+      position:absolute;
+      left:0;
+      right:0;
+      bottom:24px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
       gap:12px;
-      padding:0 4px;
+      padding: 0 18px;
+      text-align:center;
+      color:var(--portalInk);
+      letter-spacing:.05em;
     }
-    .tag{
-      font-size:12px;
-      letter-spacing:.18em;
+
+    .invocation .line{
+      font-size:13px;
+      color:var(--portalMuted);
       text-transform:uppercase;
-      color:var(--muted);
     }
-    .enter{
-      border:1px solid var(--line);
+
+    .invocation .tag{
+      font-size:12px;
+      color:rgba(255,255,255,.85);
+      letter-spacing:.12em;
+    }
+
+    #enterBtn{
+      margin-top:6px;
       background:transparent;
-      padding:10px 14px;
+      color:rgba(255,255,255,.92);
+      border:1px solid rgba(255,255,255,.30);
+      padding: 10px 18px;
       border-radius:999px;
       cursor:pointer;
-      font-size:12px;
-      letter-spacing:.12em;
+      letter-spacing:.10em;
       text-transform:uppercase;
+      font-size:12px;
+      transition: border-color 250ms ease, transform 250ms ease, background 250ms ease;
     }
-    .enter:hover{ background:#f4f4f4; }
-#ritual{
-  position: fixed;
-  inset: 0;
-  background: #0b0b0b;
-  display: grid;
-  place-items: center;
-  z-index: 9999;
-}
+    #enterBtn:hover{
+      border-color: rgba(255,255,255,.60);
+      transform: translateY(-1px);
+      background: rgba(255,255,255,.04);
+    }
 
-.portalImg{
-  width: min(900px, 90vw);
-  height: auto;
-  display: block;
-  border-radius: 16px;
-  box-shadow: 0 40px 120px rgba(0,0,0,.55);
-  filter: contrast(1.05) saturate(.95);
-}
-
-.invocation{
-  position: absolute;
-  bottom: 8vh;
-  text-align: center;
-  color: rgba(255,255,255,.85);
-  font-size: 14px;
-  letter-spacing: .06em;
-}
-
-#enter{
-  margin-top: 14px;
-  background: transparent;
-  color: rgba(255,255,255,.9);
-  border: 1px solid rgba(255,255,255,.25);
-  padding: 10px 18px;
-  border-radius: 999px;
-  cursor: pointer;
-}
-
-#enter:hover{
-  border-color: rgba(255,255,255,.6);
-}
-
-    /* CONTENT */
-    .wrap{
+    /* ===== CONTENIDO ===== */
+    main{
       max-width: 980px;
       margin: 0 auto;
       padding: 90px 22px 120px;
@@ -131,7 +152,7 @@
       transform: translateY(10px);
       transition: opacity 900ms ease, transform 900ms ease;
     }
-    body.ready .wrap{
+    body.ready main{
       opacity:1;
       transform: translateY(0);
     }
@@ -142,45 +163,58 @@
       letter-spacing:.02em;
     }
     .sub{
+      margin:0 0 44px 0;
       color:var(--muted);
-      margin:0 0 40px 0;
       line-height:1.8;
     }
     .block{
       border-top:1px solid var(--line);
-      padding-top:26px;
-      margin-top:26px;
+      padding-top:28px;
       line-height:1.9;
       font-size:16px;
       white-space:pre-line;
     }
     .foot{
-      margin-top:70px;
-      color:var(--muted);
+      margin-top:34px;
+      color:#8a8a8a;
       font-size:12px;
-      letter-spacing:.06em;
+      letter-spacing:.08em;
+      text-transform:uppercase;
     }
 
+    /* móvil */
     @media (max-width:520px){
-      h1{font-size:34px}
-      .wrap{padding-top:70px}
+      h1{ font-size:34px; }
+      main{ padding-top:70px; }
+      .portalInner{ height:min(620px, 76vh); border-radius:18px; }
+    }
+
+    /* reduce motion */
+    @media (prefers-reduced-motion: reduce){
+      #portal, main, .portalImg{ transition:none !important; }
+      #portal::before{ animation:none !important; }
     }
   </style>
 </head>
 
 <body>
-  <!-- RITUAL DE ENTRADA (PORTAL) -->
- <div id="ritual">
-  <img src="assets/portal.jpg" alt="Portal de entrada">
-  <div class="invocation">
-    <p>Esto no es bienestar.</p>
-    <button id="enter">Entrar</button>
-  </div>
-</div>
 
+  <!-- PORTAL / RITUAL -->
+  <section id="portal" aria-label="Ritual de entrada">
+    <div class="portalInner" role="button" aria-label="Portal">
+      <img class="portalImg" src="assets/portal.jpg" alt="Portal de entrada" />
+      <div class="veil"></div>
+
+      <div class="invocation">
+        <div class="tag">Bruttal Health · Portal</div>
+        <div class="line">Esto no es bienestar.</div>
+        <button id="enterBtn" type="button">Entrar</button>
+      </div>
+    </div>
+  </section>
 
   <!-- CONTENIDO -->
-  <main class="wrap" id="content" aria-label="Contenido principal">
+  <main aria-label="Contenido principal">
     <h1>BRUTTAL HEALTH</h1>
     <p class="sub">Ingeniería corporal<br/>Regulación · Estructura · Presencia</p>
 
@@ -202,29 +236,37 @@ Se calibra.
     <div class="foot">© Bruttal Health / H-Pulse · Le Corp</div>
   </main>
 
-<script>
-const enterBtn = document.getElementById('enter');
-const ritual = document.getElementById('ritual');
+  <script>
+    const portal = document.getElementById('portal');
+    const enterBtn = document.getElementById('enterBtn');
 
-function enterRitual(){
-  ritual.classList.add('fadeout');
-  document.body.classList.add('ready');
-  // opcional: vuelve al inicio limpio
-  window.scrollTo({ top: 0, behavior: "instant" });
-}
+    function enterRitual(){
+      if (portal.classList.contains('fadeout')) return;
 
-enterBtn.addEventListener('click', enterRitual);
+      portal.classList.add('fadeout');
+      document.body.classList.add('ready');
 
-// Extra: si das click en la imagen también entra
-ritual.addEventListener('click', (e) => {
-  if (e.target.tagName.toLowerCase() === "img") enterRitual();
-});
+      // por limpieza visual, lo retiramos del flujo después del fade
+      setTimeout(() => {
+        portal.style.display = 'none';
+        document.documentElement.style.overflow = 'auto';
+        document.body.style.overflow = 'auto';
+      }, 1500);
+    }
 
-// Extra: tecla Enter o Espacio
-window.addEventListener('keydown', (e) => {
-  if (e.key === "Enter" || e.key === " ") enterRitual();
-});
+    enterBtn.addEventListener('click', enterRitual);
 
-</script>
+    // click en cualquier parte del portal también entra (incluida la imagen)
+    portal.addEventListener('click', (e) => {
+      // evita doble click si presionas el botón
+      if (e.target && e.target.id === 'enterBtn') return;
+      enterRitual();
+    });
+
+    // Enter o Espacio
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') enterRitual();
+    });
+  </script>
 </body>
 </html>

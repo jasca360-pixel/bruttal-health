@@ -16,10 +16,14 @@
       --card:rgba(255,255,255,.05);
       --shadow:rgba(0,0,0,.55);
       --max:980px;
+
+      --portalBg:#000000; /* Negro absoluto */
+      --portalFrame:#0b0b0b;
     }
 
     *{box-sizing:border-box}
     html, body{height:100%}
+
     body{
       margin:0;
       background:var(--bg);
@@ -53,7 +57,6 @@
       letter-spacing:.08em;
       font-size:12px;
       text-transform:uppercase;
-      color:var(--ink);
       opacity:.92;
     }
     .menu{
@@ -98,12 +101,6 @@
       transform:translateY(0);
     }
 
-    .grid{
-      display:grid;
-      grid-template-columns: 1fr;
-      gap:34px;
-    }
-
     h1{
       margin:0 0 10px;
       font-size:46px;
@@ -116,12 +113,18 @@
       font-size:14px;
       letter-spacing:.12em;
       text-transform:uppercase;
+      line-height:1.8;
     }
 
     .rule{
       height:1px;
       background:var(--line);
       margin:22px 0;
+    }
+
+    section{
+      scroll-margin-top:110px;
+      padding-top:12px;
     }
 
     .block{
@@ -134,17 +137,6 @@
     }
     .block p{margin:0 0 12px}
     .block p:last-child{margin:0}
-    .mono{
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      color:var(--faint);
-      font-size:12px;
-      letter-spacing:.04em;
-    }
-
-    section{
-      scroll-margin-top:110px;
-      padding-top:12px;
-    }
 
     .kicker{
       font-size:12px;
@@ -164,11 +156,68 @@
       grid-template-columns: 1fr 1fr;
       gap:16px;
     }
-    @media (max-width:820px){
-      h1{font-size:38px}
-      .two{grid-template-columns:1fr}
-      .nav{top:14px; left:14px; right:14px}
-      .menu{gap:8px}
+
+    .mono{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      color:var(--faint);
+      font-size:12px;
+      letter-spacing:.04em;
+    }
+
+    /* LABS (Archivo) */
+    .labGrid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:16px;
+    }
+    .labCard{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.035);
+      border-radius:18px;
+      padding:18px 18px;
+      box-shadow:0 30px 80px rgba(0,0,0,.30);
+    }
+    .labTop{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:12px;
+      margin-bottom:10px;
+    }
+    .labCode{
+      font-size:12px;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      color:rgba(242,242,242,.82);
+    }
+    .labStatus{
+      font-size:11px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color:rgba(242,242,242,.55);
+      border:1px solid rgba(242,242,242,.14);
+      padding:6px 10px;
+      border-radius:999px;
+      background:rgba(0,0,0,.18);
+      white-space:nowrap;
+    }
+    .labTitle{
+      margin:0 0 10px;
+      font-size:16px;
+      letter-spacing:.01em;
+      color:rgba(242,242,242,.92);
+    }
+    .labNote{
+      margin:0;
+      color:rgba(242,242,242,.70);
+      line-height:1.65;
+      font-size:14px;
+    }
+    .labFoot{
+      margin-top:12px;
+      color:rgba(242,242,242,.38);
+      font-size:12px;
+      letter-spacing:.04em;
     }
 
     /* FOOT */
@@ -194,41 +243,43 @@
       background:rgba(255,255,255,.03);
       color:var(--muted);
       cursor:pointer;
-      transition:transform 180ms ease, border-color 180ms ease, color 180ms ease;
+      transition:transform 180ms ease, border-color 180ms ease, color 180ms ease, background 180ms ease;
     }
     .linkbtn:hover{
       transform:translateY(-1px);
       border-color:rgba(255,255,255,.22);
       color:var(--ink);
+      background:rgba(255,255,255,.05);
     }
 
-    /* RITUAL (PORTAL OVERLAY) */
+    /* PORTAL 2.0 (RITUAL) */
     #ritual{
       position:fixed;
       inset:0;
-      background:#000;
+      background:var(--portalBg);
       z-index:9999;
       display:flex;
       align-items:center;
       justify-content:center;
       padding:22px;
-      transition:opacity 1100ms ease, filter 1100ms ease;
+      transition:opacity 1400ms ease, filter 1400ms ease;
       opacity:1;
       filter:blur(0px);
     }
     #ritual.fadeout{
       opacity:0;
-      filter:blur(8px);
+      filter:blur(10px);
       pointer-events:none;
     }
+
     .ritual-inner{
       width:min(1100px, 92vw);
       height:min(82vh, 720px);
       display:grid;
       grid-template-columns:1fr;
-      gap:14px;
       align-items:end;
     }
+
     .portal-frame{
       position:relative;
       width:100%;
@@ -236,9 +287,10 @@
       border-radius:22px;
       overflow:hidden;
       border:1px solid rgba(255,255,255,.12);
-      background:#0b0b0b;
-      box-shadow:0 60px 160px rgba(0,0,0,.75);
+      background:var(--portalFrame);
+      box-shadow:0 60px 160px rgba(0,0,0,.80);
     }
+
     .portal-frame img{
       width:100%;
       height:100%;
@@ -246,63 +298,60 @@
       display:block;
       transform:scale(1.02);
       filter:contrast(1.05) saturate(.95);
-    }
-    .invocation{
-  position:absolute;
-  left:18px;
-  right:18px;
-  bottom:18px;
-  display:flex;
-  align-items:flex-end;
-  justify-content:space-between;
-  gap:14px;
-}
-
-.invocation .text{
-  max-width:560px;
-  padding:14px 14px;
-  border-radius:16px;
-  border:1px solid rgba(255,255,255,.12);
-  background:rgba(0,0,0,.35);
-  backdrop-filter: blur(10px);
-}
-
-.invocation .text .line1{
-  margin:0 0 6px;
-  font-size:12px;
-  letter-spacing:.16em;
-  text-transform:uppercase;
-  color:rgba(255,255,255,.78);
-}
-
-.invocation .text .line2{
-  margin:0;
-  font-size:14px;
-  color:rgba(255,255,255,.88);
-  line-height:1.45;
-}
-
-    }
-    #enter{
-      padding:12px 18px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.22);
-      background:rgba(255,255,255,.06);
-      color:rgba(255,255,255,.92);
-      letter-spacing:.14em;
-      text-transform:uppercase;
-      font-size:12px;
       cursor:pointer;
-      transition:transform 180ms ease, background 180ms ease, border-color 180ms ease;
-      white-space:nowrap;
-    }
-    #enter:hover{
-      transform:translateY(-1px);
-      background:rgba(255,255,255,.10);
-      border-color:rgba(255,255,255,.36);
+      animation: portalBreath 9s ease-in-out infinite; /* Ultra sutil */
     }
 
-    /* SUBTLE GRAIN (optional visual texture) */
+    @keyframes portalBreath{
+      0%,100%{ transform: scale(1.02); }
+      50%{ transform: scale(1.035); }
+    }
+
+    .veil{
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(to bottom, rgba(0,0,0,.10), rgba(0,0,0,.72)),
+        radial-gradient(closest-side, rgba(0,0,0,.10), rgba(0,0,0,.55));
+      pointer-events:none;
+    }
+
+    .invocation{
+      position:absolute;
+      left:18px;
+      right:18px;
+      bottom:18px;
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:14px;
+    }
+
+    .invocation .text{
+      max-width:560px;
+      padding:14px 14px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(0,0,0,.35);
+      backdrop-filter: blur(10px);
+    }
+
+    .invocation .text .line1{
+      margin:0 0 6px;
+      font-size:12px;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+      color:rgba(255,255,255,.78);
+    }
+
+    .invocation .text .line2{
+      margin:0;
+      font-size:14px;
+      color:rgba(255,255,255,.88);
+      line-height:1.45;
+    }
+
+    /* textura mínima */
     .grain{
       pointer-events:none;
       position:fixed;
@@ -312,12 +361,28 @@
       mix-blend-mode:overlay;
       background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
     }
+
+    @media (max-width:820px){
+      h1{font-size:38px}
+      .two, .labGrid{grid-template-columns:1fr}
+      .nav{top:14px; left:14px; right:14px}
+      .menu{gap:8px}
+    }
+    @media (max-width:520px){
+      h1{font-size:34px}
+      .wrap{padding-top:110px}
+      .ritual-inner{height:min(78vh, 640px)}
+      .portal-frame{border-radius:18px}
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      #ritual, .wrap, .nav, .portal-frame img{transition:none !important; animation:none !important;}
+    }
   </style>
 </head>
 
 <body>
 
-  <!-- NAV (aparece después del ritual) -->
   <header class="nav" aria-label="Navegación principal">
     <div class="brand">BRUTTAL HEALTH</div>
     <nav class="menu">
@@ -330,23 +395,22 @@
 
   <div class="grain" aria-hidden="true"></div>
 
-  <!-- RITUAL -->
+  <!-- PORTAL 2.0 -->
   <div id="ritual" aria-label="Ritual de entrada">
     <div class="ritual-inner">
-      <div class="portal-frame" id="portalFrame">
+      <div class="portal-frame" id="portalFrame" aria-label="Portal">
         <img src="assets/portal.jpg" alt="Portal de entrada">
+        <div class="veil"></div>
         <div class="invocation">
           <div class="text">
-            <p class="line1">Bruttal Health</p>
-            <p class="line2">Esto es calibración.</p>
+            <p class="line1">Ritual de entrada</p>
+            <p class="line2">Entra.</p>
           </div>
-          <button id="enter" type="button">Entrar</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- CONTENT -->
   <main class="wrap" id="content" aria-label="Contenido principal">
 
     <!-- HOME -->
@@ -357,7 +421,7 @@
       <div class="rule"></div>
 
       <div class="block">
-        <p>Bruttal Health.</p>
+        <p>Bruttal Health no es bienestar.</p>
         <p>No es motivación.<br>No es estética corporal.</p>
         <p>Es un sistema de regulación somática.</p>
         <p>Cuando el cuerpo pierde eje,<br>se ajusta.</p>
@@ -398,6 +462,59 @@
       </div>
     </section>
 
+    <!-- LABS -->
+    <section id="labs" style="margin-top:42px;">
+      <p class="kicker">BH-Labs</p>
+      <h2 class="title">Archivo</h2>
+
+      <div class="labGrid">
+        <div class="labCard">
+          <div class="labTop">
+            <div class="labCode">BH-LAB-001</div>
+            <div class="labStatus">Activo</div>
+          </div>
+          <h3 class="labTitle">Música como modulador somático</h3>
+          <p class="labNote">Ciertos bajos inducen exhalación y descenso cefálico (regulación parasimpática). Ciertos agudos inducen elevación suave y sensación de flotación.</p>
+          <div class="labFoot">Indicador: postura + respiración + eje.</div>
+        </div>
+
+        <div class="labCard">
+          <div class="labTop">
+            <div class="labCode">BH-LAB-002</div>
+            <div class="labStatus">En prueba</div>
+          </div>
+          <h3 class="labTitle">Sal como recalibración</h3>
+          <p class="labNote">Cuando el cuerpo se descoordina o entra en sobrecarga, puede perderse temporalmente el gusto; una pequeña dosis de sodio puede ayudar a restablecer percepción.</p>
+          <div class="labFoot">Nota: no usar en hipertensión. No es recomendación médica.</div>
+        </div>
+
+        <div class="labCard">
+          <div class="labTop">
+            <div class="labCode">BH-LAB-003</div>
+            <div class="labStatus">Futuro</div>
+          </div>
+          <h3 class="labTitle">Frecuencias (Fa 690–750 Hz)</h3>
+          <p class="labNote">Explorar estímulos vibratorios no médicos para modulación somática y anclaje corporal. Se documenta por efecto, no por promesa.</p>
+          <div class="labFoot">Hipótesis estética-somática. Registro por iteración.</div>
+        </div>
+
+        <div class="labCard">
+          <div class="labTop">
+            <div class="labCode">BH-LAB-004</div>
+            <div class="labStatus">Archivo</div>
+          </div>
+          <h3 class="labTitle">Voz “oscura y suave” que cobija</h3>
+          <p class="labNote">Estudiar el agudo vocal oscuro y suave como modulador: elevación de paladar blando, timbre cubierto, sensación de cobijo.</p>
+          <div class="labFoot">Línea futura: ritual sonoro / catedral mínima.</div>
+        </div>
+      </div>
+
+      <div class="block" style="margin-top:16px;">
+        <p><strong>Disclaimer</strong></p>
+        <p>BH-Labs documenta exploraciones no médicas basadas en percepción, postura y respuesta corporal. No sustituye evaluación clínica ni indicaciones profesionales.</p>
+        <p class="mono">Registro por efecto. Sin promesa.</p>
+      </div>
+    </section>
 
     <!-- CONTACTO -->
     <section id="contacto" style="margin-top:42px;">
@@ -412,48 +529,59 @@
             Enviar correo
           </a>
         </p>
-        <p class="mono" style="margin-top:12px;">Bruttal Health.</p>
+        <p class="mono" style="margin-top:12px;">Cambia el correo cuando quieras. (Ahora es placeholder).</p>
       </div>
     </section>
 
     <footer class="foot">
-      <div>© Bruttal Health / H-Pulse · Le Corp</div>
-      <button class="linkbtn" id="backToPortal" type="button">Volver al portal</button>
+      <div>© <span id="year"></span> Bruttal Health / H-Pulse · Le Corp. Todos los derechos reservados.</div>
+      <button class="linkbtn" id="backToPortal" type="button">Reingresar</button>
     </footer>
   </main>
 
   <script>
     const ritual = document.getElementById('ritual');
-    const enterBtn = document.getElementById('enter');
     const portalFrame = document.getElementById('portalFrame');
     const backToPortal = document.getElementById('backToPortal');
     const links = Array.from(document.querySelectorAll('.menu a'));
+    const year = document.getElementById('year');
+    year.textContent = new Date().getFullYear();
+
+    // Hold ritual (pausa obligatoria)
+    let armed = false;
+    setTimeout(() => { armed = true; }, 800);
 
     function enterRitual(){
+      if (ritual.classList.contains('fadeout')) return;
       ritual.classList.add('fadeout');
       document.body.classList.add('ready');
-      window.scrollTo({ top: 0, behavior: "instant" });
+
+      // limpia URL
+      if (!location.hash) history.replaceState(null, "", "#home");
     }
 
     function showPortal(){
       ritual.classList.remove('fadeout');
       document.body.classList.remove('ready');
+      armed = false;
+      setTimeout(() => { armed = true; }, 800);
       window.scrollTo({ top: 0, behavior: "instant" });
     }
 
-    enterBtn.addEventListener('click', enterRitual);
-
-    // click en la imagen también entra
-    portalFrame.addEventListener('click', (e) => {
-      if (e.target && e.target.tagName.toLowerCase() === 'img') enterRitual();
+    // entrar por click en la imagen (o en el marco)
+    portalFrame.addEventListener('click', () => {
+      if (!armed) return;
+      enterRitual();
     });
 
-    // teclado Enter o Espacio
+    // teclado Enter/Espacio
     window.addEventListener('keydown', (e) => {
+      if (!armed) return;
       if (ritual.classList.contains('fadeout')) return;
       if (e.key === "Enter" || e.key === " ") enterRitual();
     });
 
+    // reingresar
     backToPortal.addEventListener('click', showPortal);
 
     // Smooth scroll + estado activo
